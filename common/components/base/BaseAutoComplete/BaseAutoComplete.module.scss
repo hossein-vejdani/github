@@ -1,0 +1,15 @@
+.autocomplete {
+    position: relative;
+    &__list {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+
+        &-item {
+            &:hover {
+                background-color: var(--chakra-colors-gray-100);
+            }
+        }
+    }
+}

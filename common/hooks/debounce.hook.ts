@@ -1,9 +1,18 @@
+import { useState } from 'react'
+
 export const useDebounce = (callback: (...args: any[]) => void, delay: number) => {
-    let debounceTimeout: NodeJS.Timeout
-    const debounceHandler = () => {
+    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout>()
+
+    const debounceHandler = (...args: any[]) => {
         clearTimeout(debounceTimeout)
-        setTimeout(callback)
+        setDebounceTimeout(
+            setTimeout(() => {
+                callback(...args)
+            }, delay)
+        )
     }
 
-    return debounceHandler
+    return {
+        debounceHandler
+    }
 }
