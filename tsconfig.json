@@ -17,6 +17,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
+      "@components/*": ["common/components/*"],
+      "@hooks/*": ["common/hooks/*"],
+      "@locales/*": ["common/locales/*"],
+      "@types/*": ["common/types/*"],
+      "@repositories/*": ["common/repositories/*"],
+      "@entities/*": ["common/entities/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
