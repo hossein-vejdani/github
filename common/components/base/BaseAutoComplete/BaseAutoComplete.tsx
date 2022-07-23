@@ -1,10 +1,10 @@
 import { ChangeEvent, useMemo, useRef, useState } from "react"
-import { Badge, Box, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightElement, List, ListItem, Spinner, useOutsideClick } from "@chakra-ui/react"
-import type { AutoCompleteOptionType, AutoCompleteOptionValueType, AutoCompletePropsType } from "@/common/types/autocomplete.type"
+import { Badge, Box, Input, InputGroup, InputLeftAddon, InputRightElement, List, ListItem, Spinner, useOutsideClick } from "@chakra-ui/react"
+import type { AutoCompleteOptionValueType, AutoCompletePropsType } from "@/common/types/autocomplete.type"
 import style from './BaseAutoComplete.module.scss'
 import { ChevronDownIcon } from "@chakra-ui/icons"
 
-const BaseAutoComplete = ({ value, isLoading, items = [], multiple, onChange }: AutoCompletePropsType) => {
+const BaseAutoComplete = ({ value, isLoading, items = [], selectedItems = new Set(), multiple, onChange, onSelect }: AutoCompletePropsType) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const ref = useRef(null)
@@ -15,19 +15,17 @@ const BaseAutoComplete = ({ value, isLoading, items = [], multiple, onChange }: 
   })
 
 
-  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set())
   const selectItem = (value: AutoCompleteOptionValueType) => {
 
-    if (selectedItems.has(`${value}`))
-      return setSelectedItems((prev) => {
-        prev.delete(`${value}`)
-        return new Set(prev)
-      })
+    if (selectedItems.has(`${value}`)) {
+      selectedItems.delete(`${value}`)
+      return onSelect(new Set(selectedItems))
+    }
 
     if (multiple)
-      return setSelectedItems((prev) => new Set(prev.add(`${value}`)))
+      return onSelect(new Set(selectedItems.add(value)))
 
-    return setSelectedItems(new Set([`${value}`]))
+    return onSelect(new Set([value]))
   }
 
 
@@ -44,7 +42,7 @@ const BaseAutoComplete = ({ value, isLoading, items = [], multiple, onChange }: 
       py={1}
       cursor='pointer'
       borderBottom='1px solid rgba(0,0,0,0.01)'
-      bg={(selectedItems.has(item.value)) ? 'blue.50' : 'white'}
+      bg={(selectedItems.has(`${item.value}`)) ? 'blue.50' : 'white'}
       key={`${item.value}`}
     >
       {item.label}
@@ -52,7 +50,7 @@ const BaseAutoComplete = ({ value, isLoading, items = [], multiple, onChange }: 
   )), [value, items, selectedItems])
 
   const selectedItemsElements = useMemo(() =>
-    Array.from(selectedItems).map((item) => <Badge key={item}>{item}</Badge>
+    Array.from(selectedItems).map((item) => <Badge key={`${item}`}>{item}</Badge>
     ), [selectedItems])
 
   return (
@@ -68,7 +66,7 @@ const BaseAutoComplete = ({ value, isLoading, items = [], multiple, onChange }: 
           }
         </InputRightElement>
       </InputGroup>
-      <Box className={style['autocomplete__list']}>
+      <Box className={style['autocomplete__list']} boxShadow='2xl' borderRadius='md'>
         {!isLoading &&
           <List
             bg='white'

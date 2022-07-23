@@ -2,10 +2,13 @@
     position: relative;
     &__list {
         position: absolute;
+        z-index: 999;
         top: 100%;
         right: 0;
         left: 0;
-
+        max-height: 25rem;
+        overflow-y: auto;
+        box-shadow: 1;
         &-item {
             &:hover {
                 background-color: var(--chakra-colors-gray-100);

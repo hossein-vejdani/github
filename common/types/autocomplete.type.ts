@@ -5,7 +5,9 @@ export type AutoCompleteOptionType = { label: string; value: AutoCompleteOptionV
 export type AutoCompletePropsType = {
     value: AutoCompleteOptionValueType
     items?: AutoCompleteOptionType[]
+    selectedItems?: Set<AutoCompleteOptionValueType>
     multiple?: boolean
     isLoading?: boolean
     onChange: (value: string) => void
+    onSelect: (value: Set<AutoCompleteOptionValueType>) => void
 }
