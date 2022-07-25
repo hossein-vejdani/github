@@ -1,5 +1,5 @@
 import { ChangeEvent, useMemo, useRef, useState } from "react"
-import { Badge, Box, Input, InputGroup, InputLeftAddon, InputRightElement, List, ListItem, Spinner, useOutsideClick } from "@chakra-ui/react"
+import { Badge, Box, Input, InputGroup, InputLeftAddon, InputRightElement, List, ListItem, Spinner, useColorModeValue, useOutsideClick } from "@chakra-ui/react"
 import style from './BaseAutoComplete.module.scss'
 import { ChevronDownIcon } from "@chakra-ui/icons"
 
@@ -54,8 +54,9 @@ const BaseAutoComplete = ({ value, isLoading, items = [], selectedItems = new Se
       px={2}
       py={1}
       cursor='pointer'
-      borderBottom='1px solid rgba(0,0,0,0.01)'
-      bg={(selectedItems.has(`${item.value}`)) ? 'blue.50' : 'white'}
+      borderBottom='1px'
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
+      bg={(selectedItems.has(`${item.value}`)) ? useColorModeValue('blue.300', 'blue.500') : useColorModeValue('white', 'gray.900')}
       key={`${item.value}`}
     >
       {item.label}

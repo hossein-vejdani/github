@@ -8,7 +8,7 @@ export type ProfileCardPropsType = {
 }
 
 const TheProfileCard = ({ user }: ProfileCardPropsType) => {
-    let boxBg = useColorModeValue('white !important', '#111c44 !important')
+    let boxBg = useColorModeValue('white', 'gray.800')
     let mainText = useColorModeValue('gray.800', 'white')
     let secondaryText = useColorModeValue('gray.400', 'gray.400')
 
@@ -19,7 +19,7 @@ const TheProfileCard = ({ user }: ProfileCardPropsType) => {
                     <Image src={user.avatar_url} w="100%" h="100%" filter='blur(.6rem)' objectFit='cover' />
                 </Box>
                 <Flex flexDirection="column" mb="30px" position='relative' zIndex={999} p='4'>
-                    <Image src={user.avatar_url} border=".5rem solid red" mx="auto" borderColor={boxBg} width="8rem" height="8rem" mt="-4rem" borderRadius="50%" />
+                    <Image src={user.avatar_url} border=".5rem solid" mx="auto" borderColor={boxBg} width="8rem" height="8rem" mt="-4rem" borderRadius="50%" />
                     <Text fontWeight="600" color={mainText} textAlign="center" fontSize="xl">
                         {user.name || user.email}
                     </Text>
