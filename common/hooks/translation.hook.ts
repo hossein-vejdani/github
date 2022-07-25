@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
-import { fa } from '@locales/fa'
 import { en } from '@locales/en'
 
 export const useTranslate = () => {
     const { locale } = useRouter()
 
-    const t = (key: keyof typeof fa | keyof typeof en) => {
-        return locale === 'en-US' ? en[key] : fa[key]
+    const t = (key: keyof typeof en) => {
+        return en[key]
     }
     return {
         t,

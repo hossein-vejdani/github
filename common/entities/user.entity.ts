@@ -10,6 +10,7 @@ export type User = {
     gravatar_id: string
     type: string
     site_admin: boolean
+    blog: string
     hireable: boolean
     public_repos: number
     public_gists: number

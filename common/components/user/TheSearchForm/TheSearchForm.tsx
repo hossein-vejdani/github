@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useTranslate } from '@/common/hooks/translation.hook'
 import { useDebounce } from '@/common/hooks/debounce.hook'
 import { useSearchUser } from '@hooks/user.hook'
-import BaseAutoComplete from '@components/base/BaseAutoComplete/BaseAutoComplete'
-import type { AutoCompleteOptionType, AutoCompleteOptionValueType } from '@/common/types/autocomplete.type'
+import BaseAutoComplete, { AutoCompleteOptionType, AutoCompleteOptionValueType } from '@components/base/BaseAutoComplete/BaseAutoComplete'
 import TheUserCard from '../TheUserCard/TheUserCard'
 import { SearchIcon } from '@chakra-ui/icons'
+import Link from 'next/link'
 
 const DEBOUNCE_TIME = 500
 
@@ -38,7 +38,14 @@ const TheSearchForm = () => {
             <BaseAutoComplete value={username} items={items} selectedItems={selectedItems} onChange={handleUsernameChange} onSelect={(value) => setSelectedItems(value)} isLoading={loading} />
             {error && <FormErrorMessage>{error}</FormErrorMessage>}
           </FormControl>
-          <Button colorScheme='blue' ml='1' px='2rem'>{t('goToSelectedUserProfile')}</Button>
+          {
+            !!selectedItems.size && <Link href={{
+              pathname: '/profile/[username]',
+              query: { username: selectedItems.values().next().value }
+            }}>
+              <Button colorScheme='blue' ml='1' px='2rem'>{t('goToSelectedUserProfile')}</Button>
+            </Link>
+          }
         </Flex>
       </Container>
       <Center px='10' mt='.5rem'>

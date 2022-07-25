@@ -1,8 +1,21 @@
 import { ChangeEvent, useMemo, useRef, useState } from "react"
 import { Badge, Box, Input, InputGroup, InputLeftAddon, InputRightElement, List, ListItem, Spinner, useOutsideClick } from "@chakra-ui/react"
-import type { AutoCompleteOptionValueType, AutoCompletePropsType } from "@/common/types/autocomplete.type"
 import style from './BaseAutoComplete.module.scss'
 import { ChevronDownIcon } from "@chakra-ui/icons"
+
+export type AutoCompleteOptionValueType = string | number | boolean
+
+export type AutoCompleteOptionType = { label: string; value: AutoCompleteOptionValueType }
+
+export type AutoCompletePropsType = {
+  value: AutoCompleteOptionValueType
+  items?: AutoCompleteOptionType[]
+  selectedItems?: Set<AutoCompleteOptionValueType>
+  multiple?: boolean
+  isLoading?: boolean
+  onChange: (value: string) => void
+  onSelect: (value: Set<AutoCompleteOptionValueType>) => void
+}
 
 const BaseAutoComplete = ({ value, isLoading, items = [], selectedItems = new Set(), multiple, onChange, onSelect }: AutoCompletePropsType) => {
   const [isOpen, setIsOpen] = useState(false)

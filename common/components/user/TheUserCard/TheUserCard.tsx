@@ -1,6 +1,13 @@
 import { useTranslate } from '@/common/hooks/translation.hook'
-import { UserCardPropsType } from '@/common/types/usercard.type'
-import { Badge, Button, Flex, Heading, Image, Stack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Button, Flex, Heading, Image, Stack, Text, useColorModeValue } from '@chakra-ui/react'
+import Link from 'next/link'
+
+import type { User } from '@/common/entities/user.entity'
+
+export type UserCardPropsType = {
+    user: User
+}
+
 
 const TheUserCard = ({ user }: UserCardPropsType) => {
     const { t } = useTranslate()
@@ -9,12 +16,17 @@ const TheUserCard = ({ user }: UserCardPropsType) => {
             borderWidth="1px"
             borderRadius="lg"
             w='100%'
-            height={{ sm: 'auto', md: '20rem' }}
+            height={{ sm: 'auto', md: '15rem' }}
             direction={{ base: 'column', md: 'row' }}
             bg={useColorModeValue('white', 'gray.900')}
             boxShadow={'lg'}
             padding={4}>
-            <Flex flex={1} bg="blue.200">
+            <Flex flex={1} bg="blue.200" w={
+                {
+                    sm: '100%',
+                    md: '30%'
+                }
+            }>
                 <Image objectFit="cover" boxSize="100%" src={user.avatar_url} alt={user.login} />
             </Flex>
             <Stack
@@ -39,26 +51,31 @@ const TheUserCard = ({ user }: UserCardPropsType) => {
                     justifyContent={'space-between'}
                     alignItems={'center'}>
 
-                    <Button
-                        flex={1}
-                        fontSize={'sm'}
-                        rounded={'full'}
-                        bg={'blue.400'}
-                        color={'white'}
-                        boxShadow={
-                            '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-                        }
-                        _hover={{
-                            bg: 'blue.500',
-                        }}
-                        _focus={{
-                            bg: 'blue.500',
-                        }}>
-                        {t('showProfile')}
-                    </Button>
+                    <Link href={{
+                        pathname: '/profile/[username]',
+                        query: { username: user.login }
+                    }}>
+                        <Button
+                            flex={1}
+                            fontSize={'sm'}
+                            rounded={'full'}
+                            bg={'blue.400'}
+                            color={'white'}
+                            boxShadow={
+                                '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+                            }
+                            _hover={{
+                                bg: 'blue.500',
+                            }}
+                            _focus={{
+                                bg: 'blue.500',
+                            }}>
+                            {t('showProfile')}
+                        </Button>
+                    </Link>
                 </Stack>
             </Stack>
-        </Stack>
+        </Stack >
     )
 }
 
